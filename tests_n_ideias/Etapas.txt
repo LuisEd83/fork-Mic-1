@@ -1,0 +1,43 @@
+ETAPA 1:
+
+    EXPECIFICAÇÕES DA ULA (PRIMEIRA ETAPA):
+    
+    -> A entrada de {*controle*} da ULA deve ser um array ou um ponteiro const char com 6 elementos,
+    isto é, cada elemento do array será um sinal de entrada do tipo: 
+        [F0, F1] -> Seleciona a operação (se aritmética ou lógica);
+        [ENA, ENB, INVA, INC] -> Manipulam os dados de entrada.
+    
+    -> Ela deve ser capaz de ler linhas de códigos (que são as linhas de arquivo do professor). A pa-
+    lavra estará organizada em:
+        [F0, F1, ENA, ENB, INVA, INC] (Não é uma lista, é só uma representação)
+    
+    -> A palavra deve ser armazenada em um {*REGISTRADOR*}, ou seja, precisa-se criar uma classe regis-
+    trador. No caso do armazenamento, a palavra deve ser armazenada no IR (Instruction Register). Além
+    disso, deve haver outro registrador (por isso a importância de uma classe registrador) que vai atuar
+    como o PC (Program Counter) para determinar qual instrução está sendo executada.
+    
+    -> Cada linha do arquivo txt (disponibilizada pelo professor) deve ser anotado em um arquivo de log:
+    o valor de IR, o valor de PC, o valor de A, o valor de B, o valor de S e o valor do Vai-um. Será im-
+    portante para debug.
+    
+    -> O professor disponibilizou um arquivo de entrada e de saída.
+    
+    
+    COMENTÁRIOS:
+    - Creio que devemos começar pelo básico: Registrador. Ele vai ser a peça chave para armazenamento de
+    dados. No caso, uma ou duas pessoas podem fazer uma classe genérica, i.e, uma classe Registrador que,
+    no seu inicializador, determinará o seu tamanho (ex: MAR - 32).
+    
+    No meio-tempo da programação do Registrador, tenho duas ideias: 
+        -> Neste meio-tempo, as outras duas pessoas inicializam a ULA, porém deve-se ser lembrado que que as
+        palavras vão ser armazenadas em registradores, então, nesta parte, as duas pessoas deveriam "esperar"
+        as outras duas pessoas terminarem o Registrador;
+        -> As quatro pessoas programam o registrador e, só depois, iniciam a ULA.
+    
+    As duas ideias tem seus prós e contras. No primeiro há uma paralelização do trabalho, mas há a questão
+    do armazenamento. No segundo, há a negligência quanto à ULA.
+    
+    Para burlar a primeira situação (esperar o término do registrador), pensei que poderia haver um substi-
+    tuto temporário para armazenar as palavras, como um ponteiro const char ou algo do gênero.
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////

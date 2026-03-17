@@ -22,7 +22,8 @@ class Reg32 : public Register {
                         data = std::make_unique<bool>(SIZE_32);
                 }
 
-                
+                std::unique_ptr<bool> getData() {return data;}
+                void setData(std::unique_ptr<bool> d) { data = d;}            
 };
 
 class Reg8 {

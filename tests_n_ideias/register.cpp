@@ -25,16 +25,6 @@ class Reg32 : public Register {
                 
 };
 
-
-class Reg32 {
-        private:
-                const char* name
-                int 
-
-        public:
-                
-};
-
 class Reg8 {
         public:
                 char data;

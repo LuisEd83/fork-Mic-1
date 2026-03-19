@@ -53,7 +53,7 @@ void add1(bool X[], ULA_output& out){
         if(i == 30){c_out_30 = c_out;} //Armazena o penúltimo c_out em tempos distintos
         if(i == 31){c_out_31 = c_out;} //Armazena o último c_out em tempos distintos
     }
-    if(c_out_31 ^ c_out_31){
+    if(c_out_31 ^ c_out_30){
         out.carry_out = 1;
     }
 }
@@ -72,7 +72,7 @@ void addXY(bool X[], bool Y[], ULA_output& out){
         if(i == 31){c_out_31 = c_out;} //Armazena o último c_out em tempos distintos
     }
 
-    if(c_out_31 ^ c_out_31){
+    if(c_out_31 ^ c_out_30){
         out.carry_out = 1;
     }
 }

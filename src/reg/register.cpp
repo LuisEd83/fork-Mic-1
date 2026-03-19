@@ -1,17 +1,8 @@
 /**
- * (ISSO É PARA O TAD)
- * Módulo: TAD Registrador
+ * Módulo: Implementação do registrador
  * 
- * Objetivos:
- *  -> Definir os atributos, métodos e funções gerais dos regitradores de acordo
- *  com os textos (slides e livro);
- *  -> Definir um inicializador geral para o registrador;
- * 
- * Observações:
- *  -> O registrador DEVE possuir o modo de Leitura e Escrita;
- * 
- * Com os objetivos concluídos, será possível simular um registrador de N bits que
- * será utilizado no desenvolvimento da ULA.
+ * Objetivo:
+ *  -> Com as funções definidas em register.hpp
 */
 
 #include <iostream>
@@ -44,8 +35,7 @@ class Reg32 : public Register {
 
 class Reg32 {
         private:
-                const char* name
-                int 
+                const char* name;
 
         public:
                 
@@ -54,4 +44,4 @@ class Reg32 {
 class Reg8 {
         public:
                 char data;
-}
+};

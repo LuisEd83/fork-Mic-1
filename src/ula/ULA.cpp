@@ -8,29 +8,10 @@
  */
 
 #include <iostream>
-#include <memory>
+#include <array>
 
 //#include "register.hpp"   //Para desenvolver depois
-//#include "ULA.hpp"        //Para desenvolver depois
-
-//Struct que armazena os sinais de entrada
-typedef struct ULA_control{
-    bool control[6];
-    //int32_t control
-};
-
-//Struct que armazena os dados de entrada da ULA, i.e, os dados dos barramentos A e B.
-typedef struct ULA_input{
-    bool A[32]; 
-    bool B[32];
-};
-
-//Struct que armazena as saídas da ULA, desde as flags até o vetor de 32 bits.
-typedef struct ULA_output{
-    bool s[32];
-    bool carry_out;
-    //bool N, Z (Por enquanto não serão necessários)
-};
+#include "ULA.hpp"
 
 //Esta função realiza o +1 nas entradas
 void add1(bool X[], ULA_output& out){
@@ -77,10 +58,8 @@ void addXY(bool X[], bool Y[], ULA_output& out){
     }
 }
 
-class ULA{
-    public:
-        ULA_output output(ULA_input& in, ULA_control& co){
-            bool F0 = co.control[5], F1 = co.control[4]; //Entrada do decodificador
+ULA_output ULA::output(ULA_input& in, ULA_control& co){
+    bool F0 = co.control[5], F1 = co.control[4]; //Entrada do decodificador
             ULA_output out = {}; //Declaração do resultado. TODOS os campos inicializam em zero ou false
 
             //Converte o vetor [ENA, ENB, INVA, INC] em um inteiro (A mágica ocorre por conta do OR | ) 
@@ -157,17 +136,17 @@ class ULA{
                         case 1:
                             /*____Operações Aritméticas____*/
                             if(operacao == 1){ //Return 1
-                                out.s[0] = 1;
+                                out.s[0] = 1;           //Só o primeiro elemento do array precisa ser 1 (00000 [...] 00001)
                             }
 
                             if(operacao == 2){ //Return -1
                                 for(int i = 0; i < 32; i++){
-                                    out.s[i] = 1;
+                                    out.s[i] = 1;       //O -1 é dado como todos os valores do array como 1
                                 }
                             } 
 
                             if(operacao == 5){ //Return B + 1
-                                add1(in.B, out);
+                                add1(in.B, out);        //Incremento no B
                             }
 
                             if(operacao == 6){ //Return B - 1
@@ -175,22 +154,22 @@ class ULA{
                                 for(int i = 0; i < 32; i++){
                                     x[i] = 1;
                                 }
-                                addXY(in.B, x, out);
+                                addXY(in.B, x, out);    //Decremento no B
                             }
 
                             if(operacao == 9){ //Return A + 1
-                                add1(in.A, out);
+                                add1(in.A, out);        //Incremento no A
                             }
 
                             if(operacao == 11){ //Return -A
                                 for(int i = 0; i < 32; i++){
                                     out.s[i] = !in.A[i];
                                 }
-                                add1(out.s, out);
+                                add1(out.s, out);       //Realiza o complemento de dois
                             }
 
                             if(operacao == 12){ //Return A + B
-                                addXY(in.A, in.B, out);
+                                addXY(in.A, in.B, out); //Adiciono A ao B
                             }
 
                             if(operacao == 13){ //Return A + B + 1
@@ -202,8 +181,8 @@ class ULA{
                                 for(int i = 0; i < 32; i++){
                                     out.s[i] = !in.A[i];
                                 }
-                                add1(out.s, out);
-                                addXY(in.B, out.s, out);
+                                add1(out.s, out);       //Realizo o comp. de dois e armazeno no out 
+                                addXY(in.B, out.s, out);//Adiciono B ao (!A + 1) que estava armazenado no out
                             }
 
                             /*____Operações Lógicas____*/
@@ -220,7 +199,16 @@ class ULA{
             }
 
             return out;
-        }
+}
 
-        void log(){} //Implementar depois
-};
+void ULA::log(){}
+
+/*Implementação da ULA completa com os registradores*/
+std::array<bool, 32> ULA_completa(const std::string arquivo){}
+/**
+ * O retorno desta função é interessante, visto que, diferente de um array comum, o std::array possui:
+ * -> .size()  => Retorna o tamanho do array;
+ * -> .at(n)   => Acessa o elemento da posição n de forma segura, i.e, retorna uma exceção caso ocorra um erro de acesso;
+ * -> .front() => Retorna o primeiro elemento;
+ * -> .back()  => Retorna o último elemento;
+*/

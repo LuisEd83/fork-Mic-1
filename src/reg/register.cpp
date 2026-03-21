@@ -39,6 +39,8 @@ class Reg32 {
 
         public:
                 
+                //std::unique_ptr<bool> getData() {return data;}
+                //void setData(std::unique_ptr<bool> d) { data = d;}            
 };
 
 class Reg8 {

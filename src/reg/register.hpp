@@ -28,6 +28,18 @@
  *  -> Forma de acessar a memória (em alguns casos).
  */
 
+/* Ideia geral de uso dos Registradores (de 8 e 32 bits): */
+/* 
+ *  - Em relação aos atributos, as suas descrições estão acompanhadas de suas respectivas declarações
+ *   abaixo no código.
+ * - As funções transf() e recebe(), como ideia inicial, devem respectivamente receber como parâmetro
+ *   o local para onde deve ser transferido (ex.: entrada A da ULA) e o local de onde o dado será 
+ *   recebido (ex.: saída S da ULA)  
+ * - Os barramentos serão considerados como ABSTRAÇÕES, uma vez que as funções anteriores já receberão
+ *   os locais de origem e destino dos dados
+ *
+*/
+
 /*Aqui está uma estrutura para um registrador geral*/
 /**
  * Note o seguinte: as entradas (input 1 e 2) não necessariamente existem para todos os registradores, vide o  registra-

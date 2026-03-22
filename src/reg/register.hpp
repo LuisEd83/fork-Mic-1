@@ -2,7 +2,7 @@
  * Módulo: TAD Registrador
  * 
  * Objetivos:
- *  -> Definir os atributos, métodos e funções gerais dos regitradores de acordo
+ *  -> Definir os atributos, métodos e funções gerais dos registradores de acordo
  *  com os textos (slides e livro);
  *  -> Definir um inicializador geral para o registrador;
  * 
@@ -28,23 +28,44 @@
  *  -> Forma de acessar a memória (em alguns casos).
  */
 
+/* Ideia geral de uso dos Registradores (de 8 e 32 bits): */
+/* 
+ *  - Em relação aos atributos, as suas descrições estão acompanhadas de suas respectivas declarações
+ *   abaixo no código.
+ * - As funções transf() e recebe(), como ideia inicial, devem respectivamente receber como parâmetro
+ *   o local para onde deve ser transferido (ex.: entrada A da ULA) e o local de onde o dado será 
+ *   recebido (ex.: saída S da ULA)  
+ * - Os barramentos serão considerados como ABSTRAÇÕES, uma vez que as funções anteriores já receberão
+ *   os locais de origem e destino dos dados
+ *
+*/
 
-/*Aqui está uma estrutura para o registrador geral de 32 bits*/
+/*Aqui está uma estrutura para um registrador geral*/
 /**
  * Note o seguinte: as entradas (input 1 e 2) não necessariamente existem para todos os registradores, vide o  registra-
  * dor H (holder register). Nestes casos onde não há uma das entradas, vamos inicializar este registrador com o valor 
  * da porta não existente como FALSE, i.e, supondo o H, o input 2 seria FALSE, podendo só o input_1 variar.
  */
-class Reg32{
+class Reg{
     protected:
-        std::array<bool, 32> data; //Informação do registrador
         const std::string nome;    //Nome do registrador
-        bool input_1;              //Entrada 1 ESQUERDA => Na imagem do caminho de dados, este imput é o do lado esquerdo 
-        bool input_2;              //Entrada 2 DIREITA  => Na imagem do caminho de dados, este imput é o do lado direito
+        bool input_1;              //Entrada 1 ESQUERDA => Na imagem do caminho de dados, este imput é o do lado esquerdo
+        bool input_2;              // Entrada 2 DIREITA  => Na imagem do caminho de dados, este imput é o do lado direito
+
     public:
 
-        std::array<bool, 32> transfBarramentoB(/*No futuro isto terá parâmetros*/);                //Transfere os dados para o barramento B
-        bool recebeBarramentoC(/*No futuro isto terá parâmetros*/);                                //Os dados do barramento C são passados para o registrador
+        virtual bool transf(/*No futuro isto terá parâmetros*/);                //Transfere os dados para o barramento B
+        virtual std::array<bool, 32> recebe(/*No futuro isto terá parâmetros*/);   
+};
+
+/* Classe Reg32, contém todos os parâmetros da classe Reg, mas com alterações na implementação das funções transf() e recebe()*/
+class Reg32 : public Reg{
+    protected:
+        std::array<bool, 32> data; //Informação do registrador                             //Os dados do barramento C são passados para o registrador
+        
+    public:
+        bool transf(/*No futuro isto terá parâmetros*/) override; // Transfere os dados para o barramento B
+        std::array<bool, 32> recebe(/*No futuro isto terá parâmetros*/) override;
 };
 
 /*Esta classe é responsável pela interação com a memória (relacionados ao registradores de 32 bits, é claro)*/
@@ -56,14 +77,12 @@ class Reg32_memory : Reg32{
 
 /*Está classe é mais "tranquila", uma vez que só há o MBR com 8 bits*/
 //Está classe tem interação com a memória
-class Reg8{ //Toda informação do Reg32 pode ser aplicado aqui..
+class Reg8 : public Reg{ //Toda informação do Reg32 pode ser aplicado aqui..
     private:
         std::array<bool, 8> data;
-        const std::string nome;
-        bool input_1;
-        bool input_2;
+
     public:
         /*Por que 32 bits? Simplesmente Extensão de sinal no barramento B*/
-        std::array<bool, 32> transfBarramentoB(/*No futuro isto terá parâmetros*/);
-        bool recebeBarramentoC(/*No futuro isto terá parâmetros*/);
+        bool transf(/*No futuro isto terá parâmetros*/) override;
+        std::array<bool, 32> recebe(/*No futuro isto terá parâmetros*/) override;
 };

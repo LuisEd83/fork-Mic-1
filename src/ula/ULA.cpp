@@ -150,7 +150,7 @@ ULA_output ULA::output(ULA_input& in, ULA_control& co){
                     }
 
                     if(operacao == 6){ //Return B - 1
-                        bool x[32];
+                        std::array<bool, 32> x;
                         for(int i = 0; i < 32; i++){
                             x[i] = 1;
                         }

@@ -16,23 +16,23 @@
 
 /*Estruturas necesárias*/
 struct ULA_control{
-    bool control[6];
+    std::array<bool, 6> control;
 };
 
 struct ULA_input{
-    bool A[32]; 
-    bool B[32];
+    std::array<bool, 32> A; 
+    std::array<bool, 32> B;
 };
 
 struct ULA_output{
-    bool s[32];
+    std::array<bool, 32> s;
     bool carry_out;
     //bool N, Z (Por enquanto não serão necessários)
 };
 
 /*Funções de soma*/
-void add1(bool X[], ULA_output& out);
-void addXY(bool X[], bool Y[], ULA_output& out);
+void add1(std::array<bool, 32> X, ULA_output& out);
+void addXY(std::array<bool, 32> X, std::array<bool, 32> Y, ULA_output& out);
 
 /*Classe*/
 class ULA{

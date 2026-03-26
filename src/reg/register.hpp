@@ -54,8 +54,8 @@ class Reg{
 
     public:
 
-        virtual bool transf(/*No futuro isto terá parâmetros*/);                //Transfere os dados para o barramento B
-        virtual std::array<bool, 32> recebe(/*No futuro isto terá parâmetros*/);   
+        virtual bool transf() = 0;                //Transfere os dados para o barramento B
+        virtual std::array<bool, 32> recebe() = 0;   
 };
 
 /* Classe Reg32, contém todos os parâmetros da classe Reg, mas com alterações na implementação das funções transf() e recebe()*/

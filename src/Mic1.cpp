@@ -25,9 +25,24 @@ ULA_input aplicaEnable(ULA_input& entrada, ULA_control& co){
 }
 
 void imprimeArray(std::ofstream& log, std::array<bool, 32> arr){
-    for(int i = 31; i >= 0; i--) log << arr[i];
+    for(int i = 31; i >= 0; i--){log << arr[i];}
     log << "\n";
 }
+
+/*
+-> Essa função Main será alterada no futuro, desde já, 
+Chat:
+
+L: Eu coloquei as intruções (da etapada 2) lá na pasta tests;
+L: É só trocar o nome do arquivo.
+T: ::like:: 
+L: Olhei, mas não entendi
+T: Eu adicionei dois parâmetros na classe ULA
+A função ULA::output() não recebe mais nenhum parâmetro, pois ela irá usar os parâmetros do próprio objeto.
+
+L: Rapaz, e seu te disser que não aparece essa mudança pra mim? KKKKKKKKKKKKKKKKKKKKKKKK
+L: Vou te mandar o print
+*/
 
 int main(){
     // Valores iniciais de A e B
@@ -37,7 +52,7 @@ int main(){
     entrada.B[0] = 1;           // B = 00000...1
     bool ena_anterior = true; 
 
-    std::ifstream programa("tests/programa_etapa1");
+    std::ifstream programa("tests/programa_etapa1.txt");
     std::ofstream log("resultados/log_execucao.txt");
 
     // Cabeçalho
@@ -79,7 +94,7 @@ int main(){
         // Aplica enable para exibir no log o que a ULA enxerga
         ULA_input visivel = aplicaEnable(entrada, co);
 
-        ULA_output resultado = ula.output(visivel, co);
+        ULA_output resultado = ula.output(visivel, co); //Aqui?
         
         // Log do ciclo
         log << "Cycle " << PC << "\n";

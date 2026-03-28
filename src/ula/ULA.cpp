@@ -54,12 +54,12 @@ void addXY(std::array<bool, 32> X, std::array<bool, 32> Y, ULA_output& out){
     }
 
     //if(c_out_31 ^ c_out_30){
-    //    out.carry_out = 1;
+    //    out.carry_out = 1;x
     //}
     out.carry_out = c_out_31;
 }
 
-ULA_output ULA::output(ULA_input& in, ULA_control& co){
+ULA_output ULA::output(){
     bool F0 = co.control[5], F1 = co.control[4]; //Entrada do decodificador
     ULA_output out = {}; //Declaração do resultado. TODOS os campos inicializam em zero ou false
 
@@ -70,9 +70,9 @@ ULA_output ULA::output(ULA_input& in, ULA_control& co){
      * O bloco a seguir, primeiramente, utiliza dois switch case para simular um decodificador.
      * Após o decodificador, há a operação (lógica ou aritmética).
     */
-    switch(F0){
+    switch((int)F0){
         case 0:
-            switch(F1){ 
+            switch((int)F1){ 
                 case 0:
                     /*____Operações Aritméticas____*/
                             /*____Não possui____*/
@@ -122,7 +122,7 @@ ULA_output ULA::output(ULA_input& in, ULA_control& co){
             }
             break;
         case 1:
-            switch(F1){
+            switch((int)F1){
                 case 0:
                     /*____Operações Aritméticas____*/
                             /*____Não possui____*/
@@ -201,3 +201,41 @@ ULA_output ULA::output(ULA_input& in, ULA_control& co){
 
     return out;
 }
+
+void Deslocador::deslocador(ULA_output& out, ULA_control& co){ 
+    // SLL8: desloca 8 bits para a esquerda (lógico — preenche com 0)
+    if(co.control[7]) { // SLL8
+        std::array<bool, 32> shifted = {};
+        for(int i = 8; i < 32; i++){shifted[i] = out.s[i - 8];}
+        out.s = shifted;
+    }
+    // SRA1: desloca 1 bit para a direita (aritmético — preserva bit de sinal)
+    if(co.control[6]) { // SRA1
+        std::array<bool, 32> shifted = out.s; // cópia do estado original
+        bool sinal = shifted[31];
+        for(int i = 0; i < 31; i++){out.s[i] = shifted[i + 1];}
+        out.s[31] = sinal; // preserva o sinal
+    }
+
+    // N e Z sempre calculados sobre o Sd final (pós-deslocamento)
+    out.N = out.s[31];
+    out.Z = true;
+    for(int i = 0; i < 32; i++){
+        if(out.s[i]){ out.Z = false; break;}
+    }
+}
+
+//Chat:
+// L: Tá aparecendo um erro fantasma KKKKKKKK
+// L: Tá dizendo que a declaração está errada, mas elas está correta, varei
+// L: Pronto, deslocador feito (ele calcula também as flags N e Z) 
+// T: é o L né, mano?
+// L: Agora a gente tem que implementar lá no código da Mic e testar se deu certo
+// T: Um novo código? Ou alterar o antigo?
+// L: Eu tô pensando em alterar. Aquilo etm muita gambiarra (ao menos senti isso)
+// T: Entendi 
+// T: Eu acho que dá pra unificar a ULA, colocando ULA_control, ULA_input, etc como parâmetro da classe ULA.
+// Percebe que tu declarou ULA_control dentro da  main? Sendo que há uma instância de uma ULA fora da função?
+// Acredito que dava pra deixar tudo junto na mesma classe e operar uma só variável
+// L: Ahh, faz sentido, o Claude disse pra não fazer isso ()mas ele fez, não sei pq, pois ele disse que eu 
+// T: "o Claude disse pra não fazer isso", pq?

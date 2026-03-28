@@ -16,7 +16,7 @@
 
 /*Estruturas necesárias*/
 struct ULA_control{
-    std::array<bool, 6> control;
+    std::array<bool, 8> control;
 };
 
 struct ULA_input{
@@ -27,7 +27,7 @@ struct ULA_input{
 struct ULA_output{
     std::array<bool, 32> s;
     bool carry_out;
-    //bool N, Z (Por enquanto não serão necessários)
+    bool N, Z;
 };
 
 /*Funções de soma*/
@@ -36,9 +36,23 @@ void addXY(std::array<bool, 32> X, std::array<bool, 32> Y, ULA_output& out);
 
 /*Classe*/
 class ULA{
+    private:
+        ULA_input in;
+        ULA_control co;
+    public:
+        ULA_output output();  
+};
+
+/*
+class ULA{
     public:
         ULA_output output(ULA_input& in, ULA_control& co);
 };
+*/
 
+class Deslocador{
+    public:
+        void deslocador(ULA_output& out, ULA_control& co);
+};
 
 #endif

@@ -38,15 +38,7 @@ void addXY(std::array<bool, 32> X, std::array<bool, 32> Y, ULA_output& out);
 class ULA{
     public:
         ULA_output output(ULA_input& in, ULA_control& co);
-        void log();
 };
-
-/*Função da ULA completa (com os registradores, mas sem o deslocador) */
-std::array<bool, 32> ULA_completa(const std::string nome_arq); //Retorno: array com 32 booleanos
-/*
-Observação, a variável booleana que deve receber o retorno da ULA_completa deve ser do tipo:
-std::array<bool, 32>
-*/
 
 
 #endif

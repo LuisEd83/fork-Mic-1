@@ -53,9 +53,10 @@ void addXY(std::array<bool, 32> X, std::array<bool, 32> Y, ULA_output& out){
         if(i == 31){c_out_31 = c_out;} //Armazena o último c_out em tempos distintos
     }
 
-    if(c_out_31 ^ c_out_30){
-        out.carry_out = 1;
-    }
+    //if(c_out_31 ^ c_out_30){
+    //    out.carry_out = 1;
+    //}
+    out.carry_out = c_out_31;
 }
 
 ULA_output ULA::output(ULA_input& in, ULA_control& co){
@@ -192,7 +193,7 @@ ULA_output ULA::output(ULA_input& in, ULA_control& co){
                     std::cout << "[ERROR] - Corrupção de dados detectada nos sinais de entrada correspondentes ao [1, F1]" << std::endl;
                     break;
             }
-
+        break;
         default: //Basicamente uma flag
             std::cout << "[ERROR] - Corrupção de dados detectada no sinal de entrada correspondente ao F0" << std::endl;
             break;
@@ -200,15 +201,3 @@ ULA_output ULA::output(ULA_input& in, ULA_control& co){
 
     return out;
 }
-
-void ULA::log(){}
-
-/*Implementação da ULA completa com os registradores*/
-std::array<bool, 32> ULA_completa(const std::string arquivo){}
-/**
- * O retorno desta função é interessante, visto que, diferente de um array comum, o std::array possui:
- * -> .size()  => Retorna o tamanho do array;
- * -> .at(n)   => Acessa o elemento da posição n de forma segura, i.e, retorna uma exceção caso ocorra um erro de acesso;
- * -> .front() => Retorna o primeiro elemento;
- * -> .back()  => Retorna o último elemento;
-*/

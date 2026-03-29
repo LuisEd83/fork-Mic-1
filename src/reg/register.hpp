@@ -1,3 +1,5 @@
+#ifndef REGISTER_HPP
+#define REGISTER_HPP
 /**
  * Módulo: TAD Registrador
  * 
@@ -16,6 +18,8 @@
 */
 
 #include <iostream>
+#include <fstream>
+#include <vector>
 #include <array> //Esta biblioteca vai ajudar.
 
 /*O que um registrador deve possuir em geral? No caso do projeto, é claro*/
@@ -54,7 +58,7 @@ class Reg{
 
     public:
         virtual uint32_t toUint() = 0;
-        virtual bool transf() = 0;                //Transfere os dados para o barramento B
+        virtual bool transf(std::array<bool, 32>& bar) = 0;                //Transfere os dados para o barramento B
         virtual std::array<bool, 32> recebe() = 0;   
 };
 
@@ -65,15 +69,15 @@ class Reg32 : public Reg{
         
     public:
         uint32_t toUint() override; // Conversão do data para Uint
-        bool transf(/*No futuro isto terá parâmetros*/) override; // Transfere os dados para o barramento B
-        std::array<bool, 32> recebe(/*No futuro isto terá parâmetros*/) override;
+        bool transf(std::array<bool, 32>& bar) override; // Transfere os dados para o barramento B
+        std::array<bool, 32> recebe() override;
 };
 
 /*Esta classe é responsável pela interação com a memória (relacionados ao registradores de 32 bits, é claro)*/
 class Reg32_memory : Reg32{
     public:
-        std::array<bool, 32> leituraMemory(std::string arquivo); //Realiza a leitura DA memória (arquivo txt)
-        bool escritaMemory(std::string arquivo);                 //Realiza a escrita NA memória (arquivo txt)
+        std::array<bool, 32> leituraMemory(std::string arquivo, uint32_t endereco); // Realiza a leitura DA memória (arquivo txt)
+        bool escritaMemory(std::string arquivo, uint32_t endereco);                 // Realiza a escrita NA memória (arquivo txt)
 };
 
 /*Está classe é mais "tranquila", uma vez que só há o MBR com 8 bits*/
@@ -85,6 +89,8 @@ class Reg8 : public Reg{ //Toda informação do Reg32 pode ser aplicado aqui..
     public:
         /*Por que 32 bits? Simplesmente Extensão de sinal no barramento B*/
         uint32_t toUint() override; // Conversão do data para Uint
-        bool transf(/*No futuro isto terá parâmetros*/) override;
-        std::array<bool, 32> recebe(/*No futuro isto terá parâmetros*/) override;
+        bool transf(std::array<bool, 32>& bar) override;
+        std::array<bool, 32> recebe() override;
 };
+
+#endif // REGISTER_HPP

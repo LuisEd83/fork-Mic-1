@@ -99,9 +99,12 @@ std::vector<Token> tokenize(const std::string& content) {
             if (it != keywords.end()) {
                 tk.tipo = it->second;
             } else {
+                tk.tipo = Tipo::R_Geral;
+                /*
                 std::cerr << "[LEXICAL Error] Token desconhecido: \""
                           << tk.lexema << "\", posição: " << tk.posicao << "\n";
                 exit(1);
+                */
             }
             tokens.push_back(tk);
             continue;
@@ -130,6 +133,7 @@ void printTokens(const std::vector<Token>& tokens) {
             case Tipo::R_TOS:     return "R_TOS";
             case Tipo::R_OPC:     return "R_OPC";
             case Tipo::R_H:       return "R_H";
+            case Tipo::R_Geral:   return "R_Geral";
             case Tipo::Attr:      return "Attr";
             case Tipo::BIPUSH:    return "BIPUSH";
             case Tipo::DUP:       return "DUP";

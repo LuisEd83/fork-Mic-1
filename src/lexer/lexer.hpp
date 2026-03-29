@@ -8,6 +8,7 @@ enum class Tipo {
     // Registradores
     R_MAR, R_MDR, R_PC, R_MBR, R_SP,
     R_LV,  R_CPP, R_TOS, R_OPC, R_H,
+    R_Geral,
     // Instruções IJVM
     BIPUSH, DUP, ILOAD,
     // Literais

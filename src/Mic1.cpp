@@ -25,25 +25,101 @@ ULA_input aplicaEnable(ULA_input& entrada, ULA_control& co){
 }
 
 void imprimeArray(std::ofstream& log, std::array<bool, 32> arr){
-    for(int i = 31; i >= 0; i--){log << arr[i];}
+    for(int i = 0; i < 32; i++) log << arr[i]; // MSB primeiro, naturalmente
     log << "\n";
 }
 
+/*Reformulação da main*/
+int main(){
+    /*Abertura de leitura e escrita de arquivos:*/
+    std::ifstream programa("tests/programa_etapa2_tarefa1.txt");
+    std::ofstream log("resultados/log_execucao.txt");
+
+    /*Inicialização de variáveis*/
+    std::string linha;  //Armazena a linha de execução
+    int PC = 0;         //Junto com a variável acima, simulam o registrador PC
+    ULA ula;            //Instanciação da ULA
+
+    /*Constantes dadas pelo professor*/
+    ula.in.A.fill(0);
+    ula.in.B.fill(0);
+    ula.in.A[31] = 1;  // LSB = índice 31
+    ula.in.B[0]  = 1;  // MSB = índice 0
+
+    //Cabeçalho
+    log << "b = "; imprimeArray(log, ula.in.B);
+    log << "a = "; imprimeArray(log, ula.in.A);
+    log << "Start of Program\n";
+    log << "============================================================\n";
+
+    while(std::getline(programa, linha)){
+        PC++;       //Incrementa o PC
+
+        if(!linha.empty() && linha.back() == '\r'){linha.pop_back();}
+
+        /*Verifica se a linha é vazia*/
+        if(linha.empty()){
+            log << "Cycle " << PC << "\n";
+            log << "PC = " << PC << "\n";
+            log << "> Line is empty, EOP.\n";
+            break;
+        }
+
+        log << "Cycle " << PC << "\n";
+        log << "PC = " << PC << "\n";
+        log << "IR = " << linha << "\n";
+        
+        /*Extraio a instrução da linha*/
+        size_t tam_linha = linha.size();
+        for(int i = 0; i < tam_linha; i++){ /*PARTE IMPORTANTE! NÃO RETIRE*/
+            ula.co.control[i] = (linha[i] == '1'); 
+        }
+
+        /*Chamo o deslocador*/
+        // SLL8 = control[0], SRA1 = control[1]
+        if(ula.co.control[0] && ula.co.control[1]){
+            log << "> Error, invalid control signals.\n";
+            log << "============================================================\n";
+            continue; //pula para a próxima instrução
+        }
+        log << "b = "; imprimeArray(log, ula.in.B);
+        log << "a = "; imprimeArray(log, ula.in.A); 
+        
+        /*Chamo ULA para cálculo*/
+        ULA_output out; //Variável para armazenar a saída da ULA
+        out = ula.output();
+        /*Print da saída da ULA*/
+        log << "s = "; imprimeArray(log, out.s);
+        
+        /*Chama deslocador*/
+        ula.deslocador(out);
+        /*Print da saída após o deslocador*/
+        log << "sd = "; imprimeArray(log, out.s); 
+        
+        
+        log << "n = " << out.N << "\n";
+        log << "z = " << out.Z << "\n";
+        log << "co = " << out.carry_out << "\n";
+        log << "============================================================\n";
+    }
+
+    /*Verifica se chegou ao final do arquivo*/
+    if(programa.eof()){
+        PC++;
+        log << "Cycle " << PC << "\n";
+        log << "PC = " << PC << "\n";
+        log << "> Line is empty, EOP.\n";
+    }
+
+    /*Fechando arquivo*/
+    programa.close();
+    log.close();
+    return 0;
+}
+
+
+
 /*
--> Essa função Main será alterada no futuro, desde já, 
-Chat:
-
-L: Eu coloquei as intruções (da etapada 2) lá na pasta tests;
-L: É só trocar o nome do arquivo.
-T: ::like:: 
-L: Olhei, mas não entendi
-T: Eu adicionei dois parâmetros na classe ULA
-A função ULA::output() não recebe mais nenhum parâmetro, pois ela irá usar os parâmetros do próprio objeto.
-
-L: Rapaz, e seu te disser que não aparece essa mudança pra mim? KKKKKKKKKKKKKKKKKKKKKKKK
-L: Vou te mandar o print
-*/
-
 int main(){
     // Valores iniciais de A e B
     ULA_input entrada;
@@ -121,3 +197,4 @@ int main(){
     log.close();
     return 0;
 }
+*/

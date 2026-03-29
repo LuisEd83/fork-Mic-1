@@ -36,11 +36,14 @@ void addXY(std::array<bool, 32> X, std::array<bool, 32> Y, ULA_output& out);
 
 /*Classe*/
 class ULA{
-    private:
+    public:
+        /*Atributos*/
         ULA_input in;
         ULA_control co;
-    public:
-        ULA_output output();  
+
+        /*Métodos*/
+        ULA_output output();
+        void deslocador(ULA_output& out);
 };
 
 /*
@@ -50,9 +53,5 @@ class ULA{
 };
 */
 
-class Deslocador{
-    public:
-        void deslocador(ULA_output& out, ULA_control& co);
-};
 
 #endif

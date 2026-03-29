@@ -17,10 +17,14 @@ static const std::unordered_map<std::string, Tipo> keywords = {
     {"tos",    Tipo::R_TOS},
     {"opc",    Tipo::R_OPC},
     {"h",      Tipo::R_H},
-    {"=",      Tipo::Attr},
     {"BIPUSH", Tipo::BIPUSH},
     {"DUP",    Tipo::DUP},
     {"ILOAD",  Tipo::ILOAD},
+};
+
+// Mapa de símbolos de um único caractere
+static const std::unordered_map<char, Tipo> symbols = {
+    {'=', Tipo::Attr}
 };
 
 // Lê o arquivo inteiro e retorna como string
@@ -72,6 +76,16 @@ std::vector<Token> tokenize(const std::string& content) {
             tk.lexema = content.substr(start, i - start);
             tk.tipo   = Tipo::Numero;
             tokens.push_back(tk);
+            continue;
+        }
+
+        // Símbolos de um caractere
+        auto symIt = symbols.find(content[i]);
+        if (symIt != symbols.end()){
+            tk.lexema = std::string(1, content[i]); // Converte char → string
+            tk.tipo = symIt->second;
+            tokens.push_back(tk);
+            i++;
             continue;
         }
 

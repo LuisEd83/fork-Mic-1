@@ -91,6 +91,21 @@ class Reg8 : public Reg{ //Toda informação do Reg32 pode ser aplicado aqui..
         uint32_t toUint() override; // Conversão do data para Uint
         bool transf(std::array<bool, 32>& bar) override;
         std::array<bool, 32> recebe() override;
+        std::array<bool, 32> recebeU();
 };
+
+// Decodificador
+std::array<bool, 32> decodificador(uint8_t entrada,
+                                   Reg32 &OPC, Reg32 &TOS, Reg32 &CPP,
+                                   Reg32 &LV, Reg32 &SP, Reg8 &MBR,
+                                   Reg32 &PC, Reg32 &MDR);
+// Seletor
+// Convenção do enunciado:
+// Bit: 8   7    6    5   4   3   2   1   0
+// Reg: H  OPC  TOS  CPP  LV  SP  PC  MDR MAR
+void seletor(uint16_t entrada, std::array<bool, 32> sd,
+             Reg32& H,   Reg32& OPC, Reg32& TOS, Reg32& CPP,
+             Reg32& LV,  Reg32& SP,  Reg32& PC,  Reg32& MDR,
+             Reg32& MAR);
 
 #endif // REGISTER_HPP

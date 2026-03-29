@@ -104,3 +104,50 @@ std::array<bool, 32> Reg8::recebe(){
     }
     return extendido;
 }
+
+std::array<bool, 32> Reg8::recebeU(){
+    std::array<bool, 32> extendido = {};
+
+    for (int i = 0; i < 8; i++){
+        extendido[24 + i] = data[i]; // Copia os 8 bits originais
+    }
+    return extendido;
+}
+
+/* ============ Decodificador ============ */
+std::array<bool, 32> decodificador(uint8_t entrada, 
+                                    Reg32& OPC, Reg32& TOS, Reg32& CPP,
+                                    Reg32& LV,  Reg32& SP,  Reg8&  MBR,
+                                    Reg32& PC,  Reg32& MDR) {
+    switch (entrada) {
+        case 0: return MDR.recebe();
+        case 1: return PC.recebe();
+        case 2: return MBR.recebe();    // Extensão de sinal
+        case 3: return MBR.recebeU();   // Extensão com zeros (MBRU)
+        case 4: return SP.recebe();
+        case 5: return LV.recebe();
+        case 6: return CPP.recebe();
+        case 7: return TOS.recebe();
+        case 8: return OPC.recebe();
+        default:
+            std::array<bool, 32> vazio = {};
+            return vazio;
+    }
+}
+
+/* ============ Seletor ============ */
+void seletor(uint16_t entrada, std::array<bool, 32> sd,
+             Reg32& H,   Reg32& OPC, Reg32& TOS, Reg32& CPP,
+             Reg32& LV,  Reg32& SP,  Reg32& PC,  Reg32& MDR,
+             Reg32& MAR) {
+
+    if ((entrada >> 8) & 1) H.transf(sd);
+    if ((entrada >> 7) & 1) OPC.transf(sd);
+    if ((entrada >> 6) & 1) TOS.transf(sd);
+    if ((entrada >> 5) & 1) CPP.transf(sd);
+    if ((entrada >> 4) & 1) LV.transf(sd);
+    if ((entrada >> 3) & 1) SP.transf(sd);
+    if ((entrada >> 2) & 1) PC.transf(sd);
+    if ((entrada >> 1) & 1) MDR.transf(sd);
+    if ((entrada >> 0) & 1) MAR.transf(sd);
+}

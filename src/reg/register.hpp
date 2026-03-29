@@ -21,6 +21,7 @@
 #include <fstream>
 #include <vector>
 #include <array> //Esta biblioteca vai ajudar.
+#include <stdint.h>
 
 /*O que um registrador deve possuir em geral? No caso do projeto, é claro*/
 /**

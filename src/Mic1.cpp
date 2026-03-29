@@ -115,4 +115,8 @@ int main(){
     programa.close();
     log.close();
     return 0;
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes

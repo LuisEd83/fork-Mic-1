@@ -15,28 +15,6 @@
 #include "reg/register.hpp"
 #include "lexer/lexer.hpp"
 
-// Aplica ENA e ENB nas entradas antes de passar para a ULA
-ULA_input aplicaEnable(ULA_input& entrada, ULA_control& co){
-    ULA_input resultado = entrada;
-
-    // ENA = control[3], ENB = control[2]
-    if(!co.control[3]) resultado.A.fill(0); // ENA desligado -> A = 0
-    if(!co.control[2]) resultado.B.fill(0); // ENB desligado -> B = 0
-
-    return resultado;
-}
-
-void converteInt32(std::string valor, std::array<bool, 32>& data){
-    for(int i = 31; i >= 0; i++){
-        data[i] = (valor[0] == '1');
-    }
-}
-void converteInt8(std::string valor, std::array<bool, 8>& data){
-    for(int i = 7; i >= 0; i++){
-        data[i] = (valor[0] == '1');
-    }
-}
-
 void imprimeArray(std::ofstream& log, std::array<bool, 32> arr){
     for(int i = 0; i < 32; i++){log << arr[i];} // MSB primeiro, naturalmente
     log << "\n";
@@ -51,6 +29,7 @@ void imprimeRegistradores(std::ofstream& log,
                            Reg32_memory& MAR, Reg32_memory& MDR, Reg32_memory& PC,
                            Reg8& MBR, Reg32& SP, Reg32& LV, Reg32& CPP,
                            Reg32& TOS, Reg32& OPC, Reg32& H){
+
     log << "mar = "; imprimeArray(log, MAR.data);
     log << "mdr = "; imprimeArray(log, MDR.data);
     log << "pc = ";  imprimeArray(log, PC.data);
@@ -104,17 +83,17 @@ int main(){
     std::ofstream log("resultados/log_execucao.txt");                       //Arquivo de log
     
     /*Variáveis de Estado do caminho de dados*/
-    ULA ula;            //Instanciação da ULA
-    Reg8 MBR;           //Instanciação do registrador de 8 bits que possui relação com a memória
-    Reg32_memory MAR;   //Instanciação do registrador de 32 bits que possui relação com a memória       
-    Reg32_memory MDR;   //Instanciação do registrador de 32 bits que possui relação com a memória       
-    Reg32_memory PC;    //Instanciação do registrador de 32 bits que possui relação com a memória       
-    Reg32 SP;           //Instanciação do registrador de 32 bits        
-    Reg32 LV;           //Instanciação do registrador de 32 bits        
-    Reg32 CPP;          //Instanciação do registrador de 32 bits        
-    Reg32 TOS;          //Instanciação do registrador de 32 bits        
-    Reg32 OPC;          //Instanciação do registrador de 32 bits        
-    Reg32 H;            //Instanciação do registrador de 32 bits        
+    ULA ula = {};            //Instanciação da ULA
+    Reg8 MBR = {};           //Instanciação do registrador de 8 bits que possui relação com a memória
+    Reg32_memory MAR = {};   //Instanciação do registrador de 32 bits que possui relação com a memória       
+    Reg32_memory MDR = {};   //Instanciação do registrador de 32 bits que possui relação com a memória       
+    Reg32_memory PC = {};    //Instanciação do registrador de 32 bits que possui relação com a memória       
+    Reg32 SP = {};           //Instanciação do registrador de 32 bits        
+    Reg32 LV = {};           //Instanciação do registrador de 32 bits        
+    Reg32 CPP = {};          //Instanciação do registrador de 32 bits        
+    Reg32 TOS = {};          //Instanciação do registrador de 32 bits        
+    Reg32 OPC = {};          //Instanciação do registrador de 32 bits        
+    Reg32 H = {};            //Instanciação do registrador de 32 bits        
 
     /*Atribui os valores para os registradores*/
     std::string conteudo = getExpression("tests/registradores_etapa2_tarefa2.txt");
@@ -193,7 +172,7 @@ int main(){
         for(int i = 17; i <= 20; i++)
             codigoB = (codigoB << 1) | (linha[i] == '1');
 
-        // Cabeçalho do ciclo — formata IR com espaços como na saída esperada
+        //Cabeçalho do ciclo — formata IR com espaços como na saída esperada
         log << "Cycle " << ciclo << "\n";
         log << "ir = " << linha.substr(0,8) << " " 
                        << linha.substr(8,9) << " " 
@@ -201,32 +180,22 @@ int main(){
         log << "b_bus = " << nomeBarB(codigoB) << "\n";
         log << "c_bus = " << nomeBarC(mascaraC) << "\n";
 
-        // Estado antes
+        //Estado antes
         log << "> Registers before instruction\n";
         imprimeRegistradores(log, MAR, MDR, PC, MBR, SP, LV, CPP, TOS, OPC, H);
 
         //Monta entradas da ULA
         ula.in.A = H.recebe();
         ula.in.B = decodificador(codigoB, OPC, TOS, CPP, LV, SP, MBR, PC, MDR);
-        log << "[DEBUG] ula.in.B = "; imprimeArray(log, ula.in.B);
-        log << "[DEBUG] ula.in.A = "; imprimeArray(log, ula.in.A);
 
-        // Executa ULA e deslocador
+        //Executa ULA e deslocador
         ULA_output out = ula.output();
         ula.deslocador(out);
 
-        log << "[DEBUG] mascaraC = " << mascaraC << "\n";
-        log << "[DEBUG] out.s = "; imprimeArray(log, out.s);
-        ula.deslocador(out);
-        log << "[DEBUG] out.s pós deslocador = "; imprimeArray(log, out.s);
-
-        // Escreve nos registradores habilitados pelo barramento C
+        //Escreve nos registradores habilitados pelo barramento C
         seletor(mascaraC, out.s, H, OPC, TOS, CPP, LV, SP, PC, MDR, MAR);
 
-        log << "[DEBUG] sp após seletor: "; imprimeArray(log, SP.data);
-        log << "[DEBUG] lv após seletor: "; imprimeArray(log, LV.data);
-
-        // Estado depois
+        //Estado depois
         log << "> Registers after instruction\n";
         imprimeRegistradores(log, MAR, MDR, PC, MBR, SP, LV, CPP, TOS, OPC, H);
         log << "=====================================================\n";

@@ -65,17 +65,18 @@ class Reg{
 
 /* Classe Reg32, contém todos os parâmetros da classe Reg, mas com alterações na implementação das funções transf() e recebe()*/
 class Reg32 : public Reg{
-    protected:
+    public:
+    /*Atributos*/
         std::array<bool, 32> data; //Informação do registrador                             //Os dados do barramento C são passados para o registrador
         
-    public:
+    /*Métodos*/    
         uint32_t toUint() override; // Conversão do data para Uint
         bool transf(std::array<bool, 32>& bar) override; // Transfere os dados para o barramento B
         std::array<bool, 32> recebe() override;
 };
 
 /*Esta classe é responsável pela interação com a memória (relacionados ao registradores de 32 bits, é claro)*/
-class Reg32_memory : Reg32{
+class Reg32_memory : public Reg32 {  // ← adicionar public
     public:
         std::array<bool, 32> leituraMemory(std::string arquivo, uint32_t endereco); // Realiza a leitura DA memória (arquivo txt)
         bool escritaMemory(std::string arquivo, uint32_t endereco);                 // Realiza a escrita NA memória (arquivo txt)
@@ -84,10 +85,11 @@ class Reg32_memory : Reg32{
 /*Está classe é mais "tranquila", uma vez que só há o MBR com 8 bits*/
 //Está classe tem interação com a memória
 class Reg8 : public Reg{ //Toda informação do Reg32 pode ser aplicado aqui..
-    private:
+    public:
+    /*Atrbutos*/
         std::array<bool, 8> data;
 
-    public:
+    /*Métodos*/
         /*Por que 32 bits? Simplesmente Extensão de sinal no barramento B*/
         uint32_t toUint() override; // Conversão do data para Uint
         bool transf(std::array<bool, 32>& bar) override;

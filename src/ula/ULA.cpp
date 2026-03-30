@@ -210,9 +210,5 @@ ULA_output ULA::output(){
             break;
     }
 
-    std::cout << "[DEBUG ULA] F0=" << F0 << " F1=" << F1 
-          << " operacao=" << operacao 
-          << " out.s[31]=" << out.s[31] << "\n";
-
     return out;
 }

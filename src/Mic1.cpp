@@ -14,73 +14,18 @@
 #include "ula/ULA.hpp"
 #include "reg/register.hpp"
 #include "lexer/lexer.hpp"
-
-void imprimeArray(std::ofstream& log, std::array<bool, 32> arr){
-    for(int i = 0; i < 32; i++){log << arr[i];} // MSB primeiro, naturalmente
-    log << "\n";
-}
-
-void imprimeArray8(std::ofstream& log, std::array<bool, 8> arr){
-    for(int i = 0; i < 8; i++){log << arr[i];} // MSB primeiro, naturalmente
-    log << "\n";
-}
-
-void imprimeRegistradores(std::ofstream& log,
-                           Reg32_memory& MAR, Reg32_memory& MDR, Reg32_memory& PC,
-                           Reg8& MBR, Reg32& SP, Reg32& LV, Reg32& CPP,
-                           Reg32& TOS, Reg32& OPC, Reg32& H){
-
-    log << "mar = "; imprimeArray(log, MAR.data);
-    log << "mdr = "; imprimeArray(log, MDR.data);
-    log << "pc = ";  imprimeArray(log, PC.data);
-    log << "mbr = "; imprimeArray8(log, MBR.data);
-    log << "sp = ";  imprimeArray(log, SP.data);
-    log << "lv = ";  imprimeArray(log, LV.data);
-    log << "cpp = "; imprimeArray(log, CPP.data);
-    log << "tos = "; imprimeArray(log, TOS.data);
-    log << "opc = "; imprimeArray(log, OPC.data);
-    log << "h = ";   imprimeArray(log, H.data);
-}
-
-// Nomes dos registradores do barramento B
-std::string nomeBarB(uint8_t codigo){
-    switch(codigo){
-        case 0: return "mdr";
-        case 1: return "pc";
-        case 2: return "mbr";
-        case 3: return "mbru";
-        case 4: return "sp";
-        case 5: return "lv";
-        case 6: return "cpp";
-        case 7: return "tos";
-        case 8: return "opc";
-        default: return "?";
-    }
-}
-
-// Nomes dos registradores habilitados no barramento C
-std::string nomeBarC(uint16_t mascara){
-    std::string resultado = "";
-    // Bit: 8=H 7=OPC 6=TOS 5=CPP 4=LV 3=SP 2=PC 1=MDR 0=MAR
-    if((mascara >> 8) & 1) resultado += "h, ";
-    if((mascara >> 7) & 1) resultado += "opc, ";
-    if((mascara >> 6) & 1) resultado += "tos, ";
-    if((mascara >> 5) & 1) resultado += "cpp, ";
-    if((mascara >> 4) & 1) resultado += "lv, ";
-    if((mascara >> 3) & 1) resultado += "sp, ";
-    if((mascara >> 2) & 1) resultado += "pc, ";
-    if((mascara >> 1) & 1) resultado += "mdr, ";
-    if((mascara >> 0) & 1) resultado += "mar, ";
-    // Remove a vírgula e espaço finais
-    if(!resultado.empty()) resultado = resultado.substr(0, resultado.size() - 2);
-    return resultado;
-}
+#include "auxiliarFunctions/functions.hpp"
 
 /*Reformulação da main*/
 int main(){
     /*Abertura de leitura e escrita de arquivos:*/
-    std::ifstream programa("tests/programa_etapa2_tarefa2.txt");            //Arquivo que contém o programa
-    std::ofstream log("resultados/log_execucao.txt");                       //Arquivo de log
+    std::ifstream arqDados("src/memory/memory_Data.txt");           //Arquivo que contém os dados (memória)
+    std::ifstream programa("src/memory/memory_Instructions.txt");   //Arquivo que contém o programa
+    std::ofstream log("resultados/log_execucao.txt");               //Arquivo que armazena a saída
+    
+    if(!arqDados.is_open()){ std::cerr << "[FILE Error] memory_Data.txt\n";         return 1; }
+    if(!programa.is_open()){ std::cerr << "[FILE Error] memory_Instructions.txt\n"; return 1; }
+    if(!log.is_open())     { std::cerr << "[FILE Error] log_execucao.txt\n";        return 1; }
     
     /*Variáveis de Estado do caminho de dados*/
     ULA ula = {};            //Instanciação da ULA
@@ -95,15 +40,34 @@ int main(){
     Reg32 OPC = {};          //Instanciação do registrador de 32 bits        
     Reg32 H = {};            //Instanciação do registrador de 32 bits        
 
+    /*Memória de dados — 16 palavras de 32 bits*/
+    std::array<std::array<bool, 32>, 16> memoria = {};
+
+     /*Carrega memória de dados*/
+    {
+        std::string linhaM;
+        int idx = 0;
+        while(std::getline(arqDados, linhaM) && idx < 16){
+            if(!linhaM.empty() && linhaM.back() == '\r'){linhaM.pop_back();}
+            if(linhaM.empty()){continue;}
+
+            for(int j = 0; j < 32; j++){
+                memoria[idx][j] = (linhaM[j] == '1');
+            }
+
+            idx++;
+        }
+    }
+
     /*Atribui os valores para os registradores*/
-    std::string conteudo = getExpression("tests/registradores_etapa2_tarefa2.txt");
+    std::string conteudo = getExpression("tests/registradores_etapa3_tarefa1.txt");
     std::vector<Token> tokens = tokenize(conteudo);
 
-    // Percorre os tokens: padrão é REGISTRADOR = NUMERO
+    //Percorre os tokens: padrão é REGISTRADOR = NUMERO
     for(int i = 0; i < tokens.size() - 1; ){
         if(tokens[i].tipo == Tipo::EOF_TOKEN) break;
 
-        // Espera: [Registrador] [=] [Numero]
+        //Espera: [Registrador] [=] [Numero]
         Token regTok  = tokens[i];
         Token attrTok = tokens[i+1];
         Token valTok  = tokens[i+2];
@@ -141,14 +105,15 @@ int main(){
         i += 3; // avança [reg] [=] [valor]
     }
 
-    //Cabeçalho com estado inicial
-    log << "=====================================================\n";
-    log << "> Initial register states\n";
-    log << "=====================================================\n";
+    /*Cabeçalho inicial*/
+    log << "============================================================\n";
+    log << "Initial memory state\n";
+    imprimeMemoria(log, memoria);
+    log << "Initial register state\n";
     imprimeRegistradores(log, MAR, MDR, PC, MBR, SP, LV, CPP, TOS, OPC, H);
-    log << "=====================================================\n";
-    log << "Start of program\n";
-    log << "=====================================================\n";
+    log << "============================================================\n";
+    log << "Start of Program\n";
+    log << "============================================================\n";
 
     std::string linha;
     int ciclo = 0;
@@ -160,7 +125,7 @@ int main(){
         ciclo++;
 
         //Parse dos 21 bits
-        //[0-7] = ULA control, [8-16] = barramento C, [17-20] = barramento B
+        //instrução: [0-7]=ULA [8-16]=C [17-18]=MEM [19-22]=B
         for(int i = 0; i < 8; i++)
             ula.co.control[i] = (linha[i] == '1');
 
@@ -168,20 +133,27 @@ int main(){
         for(int i = 8; i <= 16; i++)
             mascaraC = (mascaraC << 1) | (linha[i] == '1');
 
+        bool bitWRITE = (linha[17] == '1');
+        bool bitREAD  = (linha[18] == '1');
+
         uint8_t codigoB = 0;
-        for(int i = 17; i <= 20; i++)
+        for(int i = 19; i <= 22; i++)
             codigoB = (codigoB << 1) | (linha[i] == '1');
 
         //Cabeçalho do ciclo — formata IR com espaços como na saída esperada
         log << "Cycle " << ciclo << "\n";
-        log << "ir = " << linha.substr(0,8) << " " 
-                       << linha.substr(8,9) << " " 
-                       << linha.substr(17,4) << "\n";
-        log << "b_bus = " << nomeBarB(codigoB) << "\n";
-        log << "c_bus = " << nomeBarC(mascaraC) << "\n";
+        log << "ir = "
+            << linha.substr(0,  8) << " "
+            << linha.substr(8,  9) << " "
+            << linha.substr(17, 2) << " "
+            << linha.substr(19, 4) << "\n";
+        log << "b = " << nomeBarB(codigoB) << "\n";
+        log << "c = " << nomeBarC(mascaraC) << "\n";
+        log << "\n";
 
         //Estado antes
         log << "> Registers before instruction\n";
+        log << "*******************************\n";
         imprimeRegistradores(log, MAR, MDR, PC, MBR, SP, LV, CPP, TOS, OPC, H);
 
         //Monta entradas da ULA
@@ -195,13 +167,37 @@ int main(){
         //Escreve nos registradores habilitados pelo barramento C
         seletor(mascaraC, out.s, H, OPC, TOS, CPP, LV, SP, PC, MDR, MAR);
 
+        /*Executo a LEITURA ou ESCRITA na memória*/
+        if(bitWRITE && !bitREAD){
+            uint32_t endereco = 0;
+            for(int i = 0; i < 32; i++){
+                endereco = (endereco << 1) | MAR.data[i];
+            }
+            if(endereco < 16){memoria[endereco] = MDR.data;}
+        }
+        else if(bitREAD && !bitWRITE){
+            uint32_t endereco = 0;
+            for(int i = 0; i < 32; i++){
+                endereco = (endereco << 1) | MAR.data[i];
+            }
+            if(endereco < 16){MDR.data = memoria[endereco];}
+        }
+
         //Estado depois
+        log << "\n";
         log << "> Registers after instruction\n";
+        log << "*******************************\n";
         imprimeRegistradores(log, MAR, MDR, PC, MBR, SP, LV, CPP, TOS, OPC, H);
-        log << "=====================================================\n";
+
+        /*Memória após a instrução*/
+        log << "\n";
+        log << "> Memory after instruction\n";
+        imprimeMemoria(log, memoria);
+        log << "============================================================\n";
+
     }
 
-    // EOP
+    //EOP
     ciclo++;
     log << "Cycle " << ciclo << "\n";
     log << "No more lines, EOP.\n";

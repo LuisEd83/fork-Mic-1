@@ -5,10 +5,11 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories(
     src
-    src/ula
-    src/reg
-    src/lexer
     src/auxiliarFunctions
+    src/lexer
+    src/memory
+    src/reg
+    src/ula
 )
 
 add_executable(mic1

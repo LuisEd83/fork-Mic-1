@@ -154,13 +154,20 @@ CMakeFiles/mic1.dir/src/auxiliarFunctions/functions.cpp.o: \
  /usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h \
  /usr/include/c++/13/bits/fstream.tcc /usr/include/c++/13/array \
- /usr/include/c++/13/compare \
- /home/eduluis/faculdade/Extras/fork-Mic-1/src/reg/register.hpp \
- /usr/include/c++/13/iostream /usr/include/c++/13/vector \
+ /usr/include/c++/13/compare /usr/include/c++/13/vector \
  /usr/include/c++/13/bits/stl_uninitialized.h \
  /usr/include/c++/13/bits/stl_vector.h \
  /usr/include/c++/13/bits/stl_bvector.h \
- /usr/include/c++/13/bits/vector.tcc \
+ /usr/include/c++/13/bits/vector.tcc /usr/include/c++/13/map \
+ /usr/include/c++/13/bits/stl_tree.h \
+ /usr/include/c++/13/ext/aligned_buffer.h \
+ /usr/include/c++/13/bits/node_handle.h \
+ /usr/include/c++/13/bits/stl_map.h \
+ /usr/include/c++/13/bits/stl_multimap.h \
+ /usr/include/c++/13/bits/erase_if.h \
+ /home/eduluis/faculdade/Extras/fork-Mic-1/src/reg/register.hpp \
+ /usr/include/c++/13/iostream \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
- /usr/include/x86_64-linux-gnu/bits/stdint-least.h
+ /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+ /home/eduluis/faculdade/Extras/fork-Mic-1/src/lexer/lexer.hpp

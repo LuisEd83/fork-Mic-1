@@ -70,3 +70,74 @@ std::string nomeBarC(uint16_t mascara){
     if(!resultado.empty()) resultado = resultado.substr(0, resultado.size() - 2);
     return resultado;
 }
+
+Microinstrucao fromString(const std::string& s){
+    Microinstrucao mi = {};
+    for(int i = 0; i < 23; i++) mi[i] = (s[i] == '1');
+    return mi;
+}
+
+TabelaMicro buildTabela(){
+    TabelaMicro t;
+    t["H_RECEBE_LV"]          = fromString("00110100" "000000001" "00" "0101");
+    t["H_INCREMENTA"]         = fromString("00111001" "000000001" "00" "0000");
+    t["MAR_RECEBE_H_RD"]      = fromString("00111000" "100000000" "01" "0000");
+    t["MAR_SP_INCREMENTA_WR"] = fromString("00110101" "000001001" "10" "0100");
+    t["TOS_RECEBE_MDR"]       = fromString("00110100" "000000010" "00" "0000");
+    t["MAR_SP_INCREMENTA"]    = fromString("00110101" "000001001" "00" "0100");
+    t["MDR_RECEBE_TOS_WR"]    = fromString("00110100" "000000010" "10" "0111");
+    t["SP_MAR_INCREMENTA"]    = fromString("00110101" "000001001" "00" "0100");
+    t["MDR_TOS_RECEBE_H_WR"]  = fromString("00111000" "000000110" "10" "0000");
+    return t;
+}
+
+
+Programa traduzir(const std::vector<Token>& tokens, int& pos,
+                  const TabelaMicro& tab){
+    Programa micro;
+
+    if(tokens[pos].tipo == Tipo::ILOAD){
+        pos++;
+        int x = std::stoi(tokens[pos].lexema);
+        pos++;
+
+        micro.push_back(tab.at("H_RECEBE_LV"));
+        for(int i = 0; i < x; i++)
+            micro.push_back(tab.at("H_INCREMENTA"));
+        micro.push_back(tab.at("MAR_RECEBE_H_RD"));
+        micro.push_back(tab.at("MAR_SP_INCREMENTA_WR"));
+        micro.push_back(tab.at("TOS_RECEBE_MDR"));
+    }
+    else if(tokens[pos].tipo == Tipo::DUP){
+        pos++;
+        micro.push_back(tab.at("MAR_SP_INCREMENTA"));
+        micro.push_back(tab.at("MDR_RECEBE_TOS_WR"));
+    }
+    else if(tokens[pos].tipo == Tipo::BIPUSH){
+        pos++;
+        std::string byteArg = tokens[pos].lexema;
+        pos++;
+
+        while(byteArg.size() < 8) byteArg = "0" + byteArg;
+        byteArg = byteArg.substr(byteArg.size() - 8, 8);
+
+        // Caso especial: byte nos 8 primeiros bits, MEM=11
+        Microinstrucao fetchEspecial = {};
+        for(int i = 0; i < 8;  i++) fetchEspecial[i]    = (byteArg[i] == '1');
+        for(int i = 8; i < 17; i++) fetchEspecial[i]    = false; // C=0
+        fetchEspecial[17] = true;  // WRITE
+        fetchEspecial[18] = true;  // READ  → caso especial
+        for(int i = 19; i < 23; i++) fetchEspecial[i]   = false; // B=0
+
+        micro.push_back(tab.at("SP_MAR_INCREMENTA"));
+        micro.push_back(fetchEspecial);
+        micro.push_back(tab.at("MDR_TOS_RECEBE_H_WR"));
+    }
+    else {
+        std::cerr << "[TRADUTOR Error] Token inesperado: "
+                  << tokens[pos].lexema << "\n";
+        pos++;
+    }
+
+    return micro;
+}

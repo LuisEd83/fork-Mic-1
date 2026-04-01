@@ -25,6 +25,7 @@ CMakeFiles/mic1.dir/src/Mic1.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1/sr
   /usr/include/c++/13/bits/cpp_type_traits.h \
   /usr/include/c++/13/bits/cxxabi_forced.h \
   /usr/include/c++/13/bits/cxxabi_init_exception.h \
+  /usr/include/c++/13/bits/erase_if.h \
   /usr/include/c++/13/bits/exception.h \
   /usr/include/c++/13/bits/exception_defines.h \
   /usr/include/c++/13/bits/exception_ptr.h \
@@ -45,6 +46,7 @@ CMakeFiles/mic1.dir/src/Mic1.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1/sr
   /usr/include/c++/13/bits/move.h \
   /usr/include/c++/13/bits/nested_exception.h \
   /usr/include/c++/13/bits/new_allocator.h \
+  /usr/include/c++/13/bits/node_handle.h \
   /usr/include/c++/13/bits/ostream.tcc \
   /usr/include/c++/13/bits/ostream_insert.h \
   /usr/include/c++/13/bits/postypes.h \
@@ -61,7 +63,10 @@ CMakeFiles/mic1.dir/src/Mic1.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1/sr
   /usr/include/c++/13/bits/stl_iterator.h \
   /usr/include/c++/13/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/13/bits/stl_iterator_base_types.h \
+  /usr/include/c++/13/bits/stl_map.h \
+  /usr/include/c++/13/bits/stl_multimap.h \
   /usr/include/c++/13/bits/stl_pair.h \
+  /usr/include/c++/13/bits/stl_tree.h \
   /usr/include/c++/13/bits/stl_uninitialized.h \
   /usr/include/c++/13/bits/stl_vector.h \
   /usr/include/c++/13/bits/streambuf.tcc \
@@ -84,6 +89,7 @@ CMakeFiles/mic1.dir/src/Mic1.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1/sr
   /usr/include/c++/13/debug/assertions.h \
   /usr/include/c++/13/debug/debug.h \
   /usr/include/c++/13/exception \
+  /usr/include/c++/13/ext/aligned_buffer.h \
   /usr/include/c++/13/ext/alloc_traits.h \
   /usr/include/c++/13/ext/atomicity.h \
   /usr/include/c++/13/ext/numeric_traits.h \
@@ -95,6 +101,7 @@ CMakeFiles/mic1.dir/src/Mic1.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1/sr
   /usr/include/c++/13/iosfwd \
   /usr/include/c++/13/iostream \
   /usr/include/c++/13/istream \
+  /usr/include/c++/13/map \
   /usr/include/c++/13/new \
   /usr/include/c++/13/ostream \
   /usr/include/c++/13/pstl/pstl_config.h \
@@ -210,6 +217,7 @@ CMakeFiles/mic1.dir/src/Mic1.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1/sr
 
 CMakeFiles/mic1.dir/src/auxiliarFunctions/functions.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1/src/auxiliarFunctions/functions.cpp \
   /home/eduluis/faculdade/Extras/fork-Mic-1/src/auxiliarFunctions/functions.hpp \
+  /home/eduluis/faculdade/Extras/fork-Mic-1/src/lexer/lexer.hpp \
   /home/eduluis/faculdade/Extras/fork-Mic-1/src/reg/register.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
@@ -230,6 +238,7 @@ CMakeFiles/mic1.dir/src/auxiliarFunctions/functions.cpp.o: /home/eduluis/faculda
   /usr/include/c++/13/bits/cpp_type_traits.h \
   /usr/include/c++/13/bits/cxxabi_forced.h \
   /usr/include/c++/13/bits/cxxabi_init_exception.h \
+  /usr/include/c++/13/bits/erase_if.h \
   /usr/include/c++/13/bits/exception.h \
   /usr/include/c++/13/bits/exception_defines.h \
   /usr/include/c++/13/bits/exception_ptr.h \
@@ -250,6 +259,7 @@ CMakeFiles/mic1.dir/src/auxiliarFunctions/functions.cpp.o: /home/eduluis/faculda
   /usr/include/c++/13/bits/move.h \
   /usr/include/c++/13/bits/nested_exception.h \
   /usr/include/c++/13/bits/new_allocator.h \
+  /usr/include/c++/13/bits/node_handle.h \
   /usr/include/c++/13/bits/ostream.tcc \
   /usr/include/c++/13/bits/ostream_insert.h \
   /usr/include/c++/13/bits/postypes.h \
@@ -266,7 +276,10 @@ CMakeFiles/mic1.dir/src/auxiliarFunctions/functions.cpp.o: /home/eduluis/faculda
   /usr/include/c++/13/bits/stl_iterator.h \
   /usr/include/c++/13/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/13/bits/stl_iterator_base_types.h \
+  /usr/include/c++/13/bits/stl_map.h \
+  /usr/include/c++/13/bits/stl_multimap.h \
   /usr/include/c++/13/bits/stl_pair.h \
+  /usr/include/c++/13/bits/stl_tree.h \
   /usr/include/c++/13/bits/stl_uninitialized.h \
   /usr/include/c++/13/bits/stl_vector.h \
   /usr/include/c++/13/bits/streambuf.tcc \
@@ -289,6 +302,7 @@ CMakeFiles/mic1.dir/src/auxiliarFunctions/functions.cpp.o: /home/eduluis/faculda
   /usr/include/c++/13/debug/assertions.h \
   /usr/include/c++/13/debug/debug.h \
   /usr/include/c++/13/exception \
+  /usr/include/c++/13/ext/aligned_buffer.h \
   /usr/include/c++/13/ext/alloc_traits.h \
   /usr/include/c++/13/ext/atomicity.h \
   /usr/include/c++/13/ext/numeric_traits.h \
@@ -300,6 +314,7 @@ CMakeFiles/mic1.dir/src/auxiliarFunctions/functions.cpp.o: /home/eduluis/faculda
   /usr/include/c++/13/iosfwd \
   /usr/include/c++/13/iostream \
   /usr/include/c++/13/istream \
+  /usr/include/c++/13/map \
   /usr/include/c++/13/new \
   /usr/include/c++/13/ostream \
   /usr/include/c++/13/pstl/pstl_config.h \
@@ -1026,11 +1041,7 @@ CMakeFiles/mic1.dir/src/ula/ULA.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1
 
 /usr/include/c++/13/bits/unordered_map.h:
 
-/usr/include/c++/13/bits/node_handle.h:
-
 /usr/include/c++/13/bits/hashtable.h:
-
-/usr/include/c++/13/bits/erase_if.h:
 
 /usr/include/c++/13/bits/enable_special_members.h:
 
@@ -1136,17 +1147,21 @@ CMakeFiles/mic1.dir/src/ula/ULA.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1
 
 /usr/include/x86_64-linux-gnu/bits/floatn-common.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
+/usr/include/x86_64-linux-gnu/gnu/stubs.h:
 
-/usr/include/c++/13/compare:
+/usr/include/x86_64-linux-gnu/bits/endian.h:
+
+/usr/include/x86_64-linux-gnu/bits/cpu-set.h:
+
+/usr/include/x86_64-linux-gnu/bits/byteswap.h:
+
+/usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
+
+/usr/include/x86_64-linux-gnu/asm/errno.h:
 
 /usr/include/c++/13/bits/stl_construct.h:
-
-/usr/include/c++/13/bits/stl_algobase.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
-
-/usr/include/c++/13/bits/refwrap.h:
 
 /usr/include/c++/13/bits/fstream.tcc:
 
@@ -1156,7 +1171,15 @@ CMakeFiles/mic1.dir/src/ula/ULA.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1
 
 /usr/include/c++/13/bits/ostream_insert.h:
 
-/usr/include/x86_64-linux-gnu/bits/cpu-set.h:
+/usr/include/c++/13/bits/stl_algobase.h:
+
+/usr/include/c++/13/bits/node_handle.h:
+
+/usr/include/c++/13/ios:
+
+/usr/include/wchar.h:
+
+/usr/include/c++/13/bits/memory_resource.h:
 
 /usr/include/c++/13/bits/invoke.h:
 
@@ -1188,10 +1211,6 @@ CMakeFiles/mic1.dir/src/ula/ULA.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1
 
 /usr/include/c++/13/iosfwd:
 
-/usr/include/c++/13/bits/stl_iterator_base_funcs.h:
-
-/usr/include/asm-generic/errno.h:
-
 /usr/include/c++/13/cwchar:
 
 /usr/include/asm-generic/errno-base.h:
@@ -1213,10 +1232,6 @@ CMakeFiles/mic1.dir/src/ula/ULA.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1
 /home/eduluis/faculdade/Extras/fork-Mic-1/src/reg/register.hpp:
 
 /home/eduluis/faculdade/Extras/fork-Mic-1/src/lexer/lexer.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
-
-/usr/include/x86_64-linux-gnu/asm/errno.h:
 
 /usr/include/c++/13/bits/string_view.tcc:
 
@@ -1256,10 +1271,6 @@ CMakeFiles/mic1.dir/src/ula/ULA.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1
 
 /usr/include/c++/13/bits/nested_exception.h:
 
-/usr/include/c++/13/bits/memory_resource.h:
-
-/usr/include/wchar.h:
-
 /usr/include/x86_64-linux-gnu/bits/endianness.h:
 
 /usr/include/c++/13/bits/basic_string.h:
@@ -1271,6 +1282,10 @@ CMakeFiles/mic1.dir/src/ula/ULA.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++locale.h:
 
 /usr/include/c++/13/bits/ptr_traits.h:
+
+/usr/include/c++/13/bits/alloc_traits.h:
+
+/usr/include/c++/13/bits/concept_check.h:
 
 /usr/include/c++/13/bits/localefwd.h:
 
@@ -1288,9 +1303,15 @@ CMakeFiles/mic1.dir/src/ula/ULA.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1
 
 /usr/include/c++/13/bits/cpp_type_traits.h:
 
-/usr/include/c++/13/bits/cxxabi_forced.h:
+/usr/include/c++/13/bits/erase_if.h:
 
-/usr/include/c++/13/string:
+/usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
+
+/usr/include/c++/13/cstddef:
+
+/usr/include/c++/13/vector:
+
+/usr/include/c++/13/bits/cxxabi_forced.h:
 
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
@@ -1302,21 +1323,31 @@ CMakeFiles/mic1.dir/src/ula/ULA.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1
 
 /usr/include/c++/13/bits/istream.tcc:
 
+/usr/include/c++/13/bits/stl_multimap.h:
+
 /usr/include/c++/13/bits/exception_ptr.h:
-
-/usr/include/c++/13/bits/concept_check.h:
-
-/usr/include/c++/13/bits/alloc_traits.h:
 
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
-/usr/include/c++/13/bits/stl_iterator.h:
-
 /usr/include/c++/13/bits/functexcept.h:
 
-/usr/include/c++/13/ios:
+/usr/include/c++/13/bits/stl_iterator.h:
+
+/usr/include/c++/13/string:
+
+/usr/include/asm-generic/errno.h:
+
+/usr/include/c++/13/bits/stl_iterator_base_funcs.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
+
+/usr/include/c++/13/compare:
 
 /usr/include/c++/13/bits/stl_iterator_base_types.h:
+
+/usr/include/c++/13/bits/stl_tree.h:
+
+/usr/include/c++/13/bits/stl_map.h:
 
 /usr/include/c++/13/bits/stl_uninitialized.h:
 
@@ -1325,6 +1356,12 @@ CMakeFiles/mic1.dir/src/ula/ULA.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1
 /usr/include/c++/13/bits/postypes.h:
 
 /usr/include/c++/13/bits/uses_allocator.h:
+
+/usr/include/x86_64-linux-gnu/bits/errno.h:
+
+/usr/include/wctype.h:
+
+/usr/include/c++/13/exception:
 
 /usr/include/x86_64-linux-gnu/bits/long-double.h:
 
@@ -1348,19 +1385,13 @@ CMakeFiles/mic1.dir/src/ula/ULA.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1
 
 /usr/include/c++/13/clocale:
 
-/usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
-
-/usr/include/c++/13/cstddef:
-
-/usr/include/c++/13/vector:
-
 /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
+
+/usr/include/c++/13/fstream:
 
 /usr/include/c++/13/bits/charconv.h:
 
 /usr/include/c++/13/bits/stl_pair.h:
-
-/usr/include/c++/13/fstream:
 
 /usr/include/c++/13/cstdio:
 
@@ -1398,6 +1429,12 @@ CMakeFiles/mic1.dir/src/ula/ULA.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1
 
 /usr/include/features-time64.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
+
+/usr/include/c++/13/bits/refwrap.h:
+
+/usr/include/c++/13/map:
+
 /usr/include/c++/13/ext/alloc_traits.h:
 
 /usr/include/c++/13/new:
@@ -1428,9 +1465,9 @@ CMakeFiles/mic1.dir/src/ula/ULA.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1
 
 /usr/include/linux/errno.h:
 
-/usr/include/c++/13/ext/aligned_buffer.h:
-
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
+
+/usr/include/c++/13/ext/aligned_buffer.h:
 
 /usr/include/locale.h:
 
@@ -1441,17 +1478,3 @@ CMakeFiles/mic1.dir/src/ula/ULA.cpp.o: /home/eduluis/faculdade/Extras/fork-Mic-1
 /usr/include/stdint.h:
 
 /usr/include/stdlib.h:
-
-/usr/include/x86_64-linux-gnu/bits/errno.h:
-
-/usr/include/c++/13/exception:
-
-/usr/include/wctype.h:
-
-/usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
-
-/usr/include/x86_64-linux-gnu/bits/byteswap.h:
-
-/usr/include/x86_64-linux-gnu/gnu/stubs.h:
-
-/usr/include/x86_64-linux-gnu/bits/endian.h:

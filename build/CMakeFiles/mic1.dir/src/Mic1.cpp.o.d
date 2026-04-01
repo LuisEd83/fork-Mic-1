@@ -166,4 +166,11 @@ CMakeFiles/mic1.dir/src/Mic1.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
  /home/eduluis/faculdade/Extras/fork-Mic-1/src/lexer/lexer.hpp \
  /home/eduluis/faculdade/Extras/fork-Mic-1/src/auxiliarFunctions/functions.hpp \
- /home/eduluis/faculdade/Extras/fork-Mic-1/src/reg/register.hpp
+ /usr/include/c++/13/map /usr/include/c++/13/bits/stl_tree.h \
+ /usr/include/c++/13/ext/aligned_buffer.h \
+ /usr/include/c++/13/bits/node_handle.h \
+ /usr/include/c++/13/bits/stl_map.h \
+ /usr/include/c++/13/bits/stl_multimap.h \
+ /usr/include/c++/13/bits/erase_if.h \
+ /home/eduluis/faculdade/Extras/fork-Mic-1/src/reg/register.hpp \
+ /home/eduluis/faculdade/Extras/fork-Mic-1/src/lexer/lexer.hpp

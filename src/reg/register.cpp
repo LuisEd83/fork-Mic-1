@@ -141,9 +141,6 @@ void seletor(uint16_t entrada, std::array<bool, 32> sd,
              Reg32& LV,  Reg32& SP,  Reg32& PC,  Reg32& MDR,
              Reg32& MAR) {
 
-    std::cout << "[DEBUG seletor] entrada = " << entrada << "\n";
-    std::cout << "[DEBUG seletor] sd[0] = " << sd[0] << "\n";
-
     if ((entrada >> 8) & 1) H.transf(sd);
     if ((entrada >> 7) & 1) OPC.transf(sd);
     if ((entrada >> 6) & 1) TOS.transf(sd);

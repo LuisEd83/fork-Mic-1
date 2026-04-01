@@ -49,7 +49,7 @@ std::string nomeBarB(uint8_t codigo){
         case 6: return "cpp";
         case 7: return "tos";
         case 8: return "opc";
-        default: return "?";
+        default: return "none";
     }
 }
 

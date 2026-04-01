@@ -47,14 +47,14 @@ void ULA::deslocador(ULA_output& out){
     // SLL8: desloca 8 bits para a esquerda (lógico — preenche com 0)
     if(co.control[0]) { // SLL8
         std::array<bool, 32> shifted = {};
-        for(int i = 0; i < 24; i++){shifted[i] = out.s[i + 9];}
+        for(int i = 0; i < 24; i++){shifted[i] = out.s[i + 8];}
         out.s = shifted;
     }
     // SRA1: desloca 1 bit para a direita (aritmético — preserva bit de sinal)
     if(co.control[1]) { // SRA1
         std::array<bool, 32> shifted = out.s; // cópia do estado original
         bool sinal = shifted[0];
-        for(int i = 31; i >= 0; i--) out.s[i] = shifted[i - 1];
+        for(int i = 31; i >= 1; i--) out.s[i] = shifted[i - 1];
         out.s[0] = sinal; // preserva o sinal
     }
 
